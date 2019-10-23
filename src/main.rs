@@ -2,7 +2,6 @@ use std::time::{Instant};
 use std::io::{self, Write};
 use std::mem;
 
-
 fn main() -> io::Result<()> {
     let iterations = 60;
     
@@ -10,7 +9,7 @@ fn main() -> io::Result<()> {
     let answer = say_it_n_times(vec![1], iterations);
 
     let output: Vec<u8> = answer.into_iter().map(|x| x + 48u8).collect();
-    io::stdout().write_all(&output);
+    io::stdout().write_all(&output).expect("write to std out");
     let elapsed_milliseconds = now.elapsed().as_millis();
 
     println!("\nIterations: {}", iterations);
@@ -41,20 +40,20 @@ fn say(_look: &Vec<u8>, _say: &mut Vec<u8>) {
     _say.push(_current_digit);
 }
 
-fn say_it_n_times(_look: Vec<u8>, _ntimes: usize) -> Vec<u8> {
+fn say_it_n_times(_starting_sequence: Vec<u8>, _ntimes: usize) -> Vec<u8> {
     
-    let mut _answer: Vec<u8> = Vec::with_capacity(20_000_000);
-    let mut _buffer: Vec<u8> = Vec::with_capacity(20_000_000);
+    let mut _look: Vec<u8> = Vec::with_capacity(20_000_000);
+    let mut _say: Vec<u8> = Vec::with_capacity(20_000_000);
 
-    for _digit in _look {
-        _answer.push(_digit);
+    for _digit in _starting_sequence {
+        _look.push(_digit);
     }
 
     for _ in 1.._ntimes {
-        say(&_answer, &mut _buffer);
-        mem::swap(&mut _answer, &mut _buffer);
+        say(&_look, &mut _say);
+        mem::swap(&mut _look, &mut _say);
     }
-    return _answer;
+    return _look;
 }
 
 #[test]
