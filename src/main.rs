@@ -1,7 +1,14 @@
+use std::time::{Duration, Instant};
+
 fn main() {
-    let iterations = 59;
+    let iterations = 60;
+    
+    let now = Instant::now();
     let answer = say_it_n_times(vec![1], iterations);
+    let elapsed_milliseconds = now.elapsed().as_millis();
+
     println!("{} iterations digit count: {}", iterations, answer.len());
+    println!("Time to calculate: {} millseconds", elapsed_milliseconds);
 }
 
 fn say(_look: &Vec<u8>) -> Vec<u8> {
@@ -31,7 +38,7 @@ fn say_it_n_times(_look: Vec<u8>, _ntimes: usize) -> Vec<u8> {
     
     let mut _answer: Vec<u8> = _look.clone();
 
-    for x in 0.._ntimes {
+    for x in 1.._ntimes {
         _answer = say(&_answer);
     }
     return _answer;
@@ -62,13 +69,13 @@ fn _111223144511777_is_3122131124152137() {
 }
 
 #[test]
-fn _1_with_2_iterations() {
+fn _1_with_3_iterations() {
     let start = vec![1];
-    assert_eq!(say_it_n_times(start,2), vec![2,1]);
+    assert_eq!(say_it_n_times(start,3), vec![2,1]);
 }
 
 #[test]
-fn _1_with_40_iterations() {
+fn _1_with_41_iterations() {
     let start = vec![1];
-    assert_eq!(say_it_n_times(start,40).len(), 82350);
+    assert_eq!(say_it_n_times(start,41).len(), 82350);
 }
