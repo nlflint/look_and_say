@@ -1,4 +1,4 @@
-use std::time::{Duration, Instant};
+use std::time::{Instant};
 
 fn main() {
     let iterations = 60;
@@ -7,7 +7,8 @@ fn main() {
     let answer = say_it_n_times(vec![1], iterations);
     let elapsed_milliseconds = now.elapsed().as_millis();
 
-    println!("{} iterations digit count: {}", iterations, answer.len());
+    println!("Iterations: {}", iterations);
+    println!("Digit count: {}", answer.len());
     println!("Time to calculate: {} millseconds", elapsed_milliseconds);
 }
 
@@ -38,7 +39,7 @@ fn say_it_n_times(_look: Vec<u8>, _ntimes: usize) -> Vec<u8> {
     
     let mut _answer: Vec<u8> = _look.clone();
 
-    for x in 1.._ntimes {
+    for _ in 1.._ntimes {
         _answer = say(&_answer);
     }
     return _answer;
